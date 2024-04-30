@@ -1,0 +1,47 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#42886b",
+        "activityBar.background": "#42886b",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#c3a9d5",
+        "activityBarBadge.foreground": "#15202b",
+        "commandCenter.border": "#e7e7e799",
+        "sash.hoverBorder": "#42886b",
+        "statusBar.background": "#316650",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#42886b",
+        "statusBarItem.remoteBackground": "#316650",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "titleBar.activeBackground": "#316650",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#31665099",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "restoreTerminals.terminals": [
+        {
+            "splitTerminals": [
+                {
+                    "name": "laravel",
+                    "commands": [
+                        "php artisan serve --port=5150"
+                    ]
+                },
+                {
+                    "name": "npm",
+                    "commands": [
+                        "npm run dev"
+                    ]
+                },
+                {
+                    "name": "git",
+                    "commands": [
+                        "git fetch",
+                        "git pull"
+                    ]
+                }
+            ]
+        },
+    ],
+    "peacock.color": "#316650"
+}
