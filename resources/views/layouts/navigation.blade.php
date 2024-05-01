@@ -62,6 +62,11 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <div class="font-medium text-base text-gray-800 mx-auto px-3">
+                            {{ Auth::user()->user_type }}
+                        </div>
+                        <hr>
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
@@ -128,6 +133,8 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->user_type }}</div>
+
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
