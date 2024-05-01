@@ -71,6 +71,12 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
+                        @if (Auth::check() && (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin'))
+                            <x-dropdown-link :href="route('users.index')">
+                                {{ __('Users') }}
+                            </x-dropdown-link>
+                        @endif
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -138,6 +144,12 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+
+                @if (Auth::check() && (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin'))
+                    <x-responsive-nav-link :href="route('users.index')">
+                        {{ __('Users') }}
+                    </x-responsive-nav-link>
+                @endif
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
