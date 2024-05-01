@@ -19,49 +19,49 @@
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)"
+            <x-text-input id="name" name="name" type="text" class="text-gray-900 mt-1 block w-full" :value="old('name', $user->name)"
                 required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <div>
             <x-input-label for="first_name" :value="__('First Name')" />
-            <x-text-input id="first_name" name="first_name" type="text" class="mt-1 block w-full" :value="old('first_name', $user->first_name)"
+            <x-text-input id="first_name" name="first_name" type="text" class="text-gray-900 mt-1 block w-full" :value="old('first_name', $user->first_name)"
                 required autofocus autocomplete="first_name" />
             <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
         </div>
 
         <div>
             <x-input-label for="middle_name" :value="__('Middle Name')" />
-            <x-text-input id="middle_name" name="middle_name" type="text" class="mt-1 block w-full" :value="old('middle_name', $user->middle_name)"
+            <x-text-input id="middle_name" name="middle_name" type="text" class="text-gray-900 mt-1 block w-full" :value="old('middle_name', $user->middle_name)"
                 required autofocus autocomplete="middle_name" />
             <x-input-error class="mt-2" :messages="$errors->get('middle_name')" />
         </div>
 
         <div>
             <x-input-label for="last_name" :value="__('Last Name')" />
-            <x-text-input id="last_name" name="last_name" type="text" class="mt-1 block w-full" :value="old('last_name', $user->last_name)"
+            <x-text-input id="last_name" name="last_name" type="text" class="text-gray-900 mt-1 block w-full" :value="old('last_name', $user->last_name)"
                 required autofocus autocomplete="last_name" />
             <x-input-error class="mt-2" :messages="$errors->get('last_name')" />
         </div>
 
         <div>
             <x-input-label for="section" :value="__('Section')" />
-            <x-text-input id="section" name="section" type="text" class="mt-1 block w-full" :value="old('section', $user->section)"
+            <x-text-input id="section" name="section" type="text" class="text-gray-900 mt-1 block w-full" :value="old('section', $user->section)"
                 required autofocus autocomplete="section" />
             <x-input-error class="mt-2" :messages="$errors->get('section')" />
         </div>
 
         <div>
             <x-input-label for="year_level" :value="__('Year Level')" />
-            <x-text-input id="year_level" name="year_level" type="text" class="mt-1 block w-full" :value="old('year_level', $user->year_level)"
+            <x-text-input id="year_level" name="year_level" type="text" class="text-gray-900 mt-1 block w-full" :value="old('year_level', $user->year_level)"
                 required autofocus autocomplete="year_level" />
             <x-input-error class="mt-2" :messages="$errors->get('year_level')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)"
+            <x-text-input id="email" name="email" type="email" class="text-gray-900 mt-1 block w-full" :value="old('email', $user->email)"
                 required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
