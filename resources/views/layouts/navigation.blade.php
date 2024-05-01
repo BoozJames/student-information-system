@@ -130,11 +130,11 @@
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-small text-sm text-gray-500">{{ Auth::user()->user_type }}</div>
+
             </div>
 
             <div class="mt-3 space-y-1">
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->user_type }}</div>
-
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
