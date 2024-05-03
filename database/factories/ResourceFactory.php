@@ -3,29 +3,38 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Generator;
-use Illuminate\Support\Str;
+use App\Models\Resource;
+use Faker\Generator as Faker;
+use Illuminate\Support\Facades\Storage;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Resource>
- */
 class ResourceFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function definition(): array
     {
+        $faker = $this->faker;
+
+        // Generate a unique filename
+        $filename = $faker->word() . '.pdf'; // You can use word() or sentence() depending on your preference
+
+        // Generate a random content for the file (optional)
+        $content = $faker->text(200);
+
+        // Store the file in Laravel's filesystem
+        Storage::put('public/resources/' . $filename, $content);
+
         return [
-            'resource_name' => fake()->name,
-            'resource_type' => 'image', // Set the resource type to 'image'
-            'resource_filename' => fake()->word . '.jpg', // Example filename
-            'resource_url' => fake()->imageUrl(), // Generate a random image URL
-            'resource_uploaded_by' => fake()->name,
-            'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
-            'updated_at' => fake()->dateTimeBetween('-1 year', 'now'),
+            'resource_name' => $faker->sentence(),
+            'resource_type' => $faker->randomElement(['event', 'announcement']), // Set the resource type randomly to 'event' or 'announcement'
+            'resource_filename' => $filename, // Assign the generated filename
+            'resource_url' => 'storage/resources/' . $filename, // Set the file path in Laravel
+            'resource_uploaded_by' => $faker->name,
+            'created_at' => $faker->dateTimeBetween('-1 year', 'now'),
+            'updated_at' => $faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }
