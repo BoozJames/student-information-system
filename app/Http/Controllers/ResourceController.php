@@ -32,7 +32,7 @@ class ResourceController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin') {
             return view('resources.create');
         } else {
             abort(403, 'Unauthorized action.');
@@ -44,7 +44,7 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin') {
             $request->validate([
                 'resource_name' => 'required',
                 'resource_type' => 'required',
@@ -75,7 +75,7 @@ class ResourceController extends Controller
      */
     public function edit(Resource $resource)
     {
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin') {
             return view('resources.edit', compact('resource'));
         } else {
             abort(403, 'Unauthorized action.');
@@ -87,7 +87,7 @@ class ResourceController extends Controller
      */
     public function update(Request $request, Resource $resource)
     {
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin') {
             $request->validate([
                 'resource_name' => 'required',
                 'resource_type' => 'required',
@@ -110,7 +110,7 @@ class ResourceController extends Controller
      */
     public function destroy(Resource $resource)
     {
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin') {
             $resource->delete();
 
             return redirect()->route('resource.index')
