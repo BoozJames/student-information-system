@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // Only admins can access the user index
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             $query = User::query();
 
             // Search functionality
@@ -41,7 +41,7 @@ class UserController extends Controller
     public function create()
     {
         // Only admins can create users
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             return view('users.create');
         } else {
             abort(403, 'Unauthorized action.');
@@ -54,7 +54,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // Only admins can create users
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Validation rules for creating a user
             $request->validate([
                 'name' => 'required',
@@ -79,7 +79,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         // Only admins can view user details
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             $user = User::findOrFail($id);
             return view('users.show', compact('user'));
         } else {
@@ -93,7 +93,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         // Only admins can edit users
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             $user = User::findOrFail($id);
             return view('users.edit', compact('user'));
         } else {
@@ -107,7 +107,7 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         // Only admins can update users
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Validation rules for updating a user
             $request->validate([
                 'name' => 'required',
@@ -133,7 +133,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         // Only admins can delete users
-        if (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             $user = User::findOrFail($id);
             $user->delete();
 
