@@ -23,6 +23,14 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // $userType = $this->faker->randomElement(['student', 'teacher']);
+
+        // // Adjusting user type based on distribution
+        // if ($userType === 'teacher') {
+        //     $userType = $this->faker->randomElement(['teacher', 'teacher', 'teacher', 'teacher', 'student']);
+        // }
+        // $userType = $this->faker->randomElement(['student', 'teacher'], [80, 20]);
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
@@ -30,6 +38,7 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'user_type' => fake()->randomElement(['student', 'teacher']),
+            // 'user_type' => $userType,
         ];
     }
 
