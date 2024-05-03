@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the user.
      */
     public function index(Request $request)
     {
-        // Only admins can access the user index
+        // Only admins and teachers can access the user index
         if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             $query = User::query();
 
@@ -27,6 +27,11 @@ class UserController extends Controller
                 });
             }
 
+            // Exclude admin users if the authenticated user is a teacher
+            if (strtolower(Auth::user()->user_type) === 'teacher') {
+                $query->where('user_type', '!=', 'admin');
+            }
+
             $users = $query->paginate();
 
             return view('users.index', compact('users'));
@@ -36,7 +41,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new user.
      */
     public function create()
     {
@@ -49,7 +54,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
      */
     public function store(Request $request)
     {
@@ -74,7 +79,7 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified user.
      */
     public function show(string $id)
     {
@@ -88,7 +93,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified user.
      */
     public function edit(string $id)
     {
@@ -102,7 +107,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified user in storage.
      */
     public function update(Request $request, string $id)
     {
@@ -128,7 +133,7 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified user from storage.
      */
     public function destroy(string $id)
     {
