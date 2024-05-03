@@ -19,23 +19,23 @@ class DatabaseSeeder extends Seeder
         Resource::factory(50)->create();
         Subject::factory()->count(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test Student',
-        //     'email' => 'teststudent@test.test',
-        //     'user_type' => 'student'
-        // ]);
+        User::factory()->create([
+            'name' => 'Test Student',
+            'email' => 'teststudent@test.test',
+            'user_type' => 'student'
+        ]);
 
-        // User::factory()->create([
-        //     'name' => 'Test Teacher',
-        //     'email' => 'testteacher@test.test',
-        //     'user_type' => 'teacher'
-        // ]);
+        User::factory()->create([
+            'name' => 'Test Teacher',
+            'email' => 'testteacher@test.test',
+            'user_type' => 'teacher'
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => env('SYS_USERNAME'),
-        //     'email' => env('SYS_EMAIL'),
-        //     'password' => env('SYS_PASSWORD'),
-        //     'user_type' => env('SYS_USER_TYPE')
-        // ]);
+        \App\Models\User::factory()->create([
+            'name' => env('SYS_USERNAME'),
+            'email' => env('SYS_EMAIL'),
+            'password' => env('SYS_PASSWORD'),
+            'user_type' => env('SYS_USER_TYPE')
+        ]);
     }
 }
