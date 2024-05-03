@@ -12,5 +12,16 @@ class Subject extends Model
     protected $fillable = [
         'subject_name',
         'subject_code',
+        'teacher_id'
     ];
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }
