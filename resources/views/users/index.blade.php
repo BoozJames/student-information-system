@@ -26,9 +26,16 @@
                                 <form method="GET" action="{{ route('users.index') }}"
                                     class="flex flex-wrap items-center">
                                     <input type="text" name="search" placeholder="Search..."
-                                        class="mr-2 px-4 py-2 border rounded focus:border-yellow-300">
+                                        class="mr-2 px-4 py-2 border rounded focus:border-yellow-300 text-gray-900">
                                     <button type="submit" class="bg-[#40930B] px-4 py-2 rounded">Search</button>
                                 </form>
+                                <!-- Dropdown filter -->
+                                <select id="userTypeFilter" onchange="filterUsers(this.value)"
+                                    class="mb-2 py-2 pr-7 bg-white border rounded text-gray-900 focus:border-yellow-300">
+                                    <option value="">User Type Filter</option>
+                                    <option value="student">Student</option>
+                                    <option value="teacher">Teacher</option>
+                                </select>
                             </div>
                         </div>
 
@@ -99,5 +106,13 @@
 <script>
     function resetFilters() {
         window.location.href = "{{ route('users.index') }}";
+    }
+
+    function filterUsers(userType) {
+        if (userType !== '') {
+            window.location.href = "{{ route('users.index') }}?user_type=" + userType;
+        } else {
+            resetFilters();
+        }
     }
 </script>

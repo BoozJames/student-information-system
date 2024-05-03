@@ -16,7 +16,7 @@ class UserController extends Controller
         // Only admins and teachers can access the user index
         if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             $query = User::query();
-
+    
             // Search functionality
             if ($request->filled('search')) {
                 $search = $request->input('search');
@@ -26,19 +26,27 @@ class UserController extends Controller
                         ->orWhere('user_type', 'like', "%$search%");
                 });
             }
-
+    
+            // Filter by user type
+            if ($request->filled('user_type')) {
+                $userType = $request->input('user_type');
+                $query->where('user_type', $userType);
+            }
+    
             // Exclude admin users if the authenticated user is a teacher
             if (strtolower(Auth::user()->user_type) === 'teacher') {
                 $query->where('user_type', '!=', 'admin');
             }
-
-            $users = $query->paginate();
-
+    
+            // Paginate with preserved query parameters
+            $users = $query->paginate()->appends(request()->query());
+    
             return view('users.index', compact('users'));
         } else {
             abort(403, 'Unauthorized action.');
         }
     }
+    
 
     /**
      * Show the form for creating a new user.
