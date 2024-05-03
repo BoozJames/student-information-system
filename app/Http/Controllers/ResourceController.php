@@ -23,7 +23,14 @@ class ResourceController extends Controller
                     ->orWhere('resource_uploaded_by', 'like', "%$search%");
             });
         }
-        $resources = $resourceQuery->paginate();
+
+        // Add filter for resource_type
+        if ($request->filled('type')) {
+            $type = $request->input('type');
+            $resourceQuery->where('resource_type', $type);
+        }
+
+        $resources = $resourceQuery->paginate()->appends(request()->query());
         return view('resources.index', compact('resources'));
     }
 

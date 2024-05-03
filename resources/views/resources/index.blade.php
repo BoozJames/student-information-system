@@ -31,6 +31,13 @@
                                         class="mr-2 px-4 py-2 border rounded focus:border-yellow-300">
                                     <button type="submit" class="bg-[#40930B] px-4 py-2 rounded">Search</button>
                                 </form>
+                                <!-- Dropdown filter -->
+                                <select id="filter" onchange="filter(this.value)"
+                                    class="mb-2 py-2 pr-7 bg-white border rounded text-gray-900 focus:border-yellow-300">
+                                    <option value="">Filter</option>
+                                    <option value="event">Events</option>
+                                    <option value="announcement">Announcements</option>
+                                </select>
                             </div>
                         </div>
 
@@ -82,5 +89,13 @@
 <script>
     function resetFilters() {
         window.location.href = "{{ route('resources.index') }}";
+    }
+
+    function filter(type) {
+        if (type !== '') {
+            window.location.href = "{{ route('resources.index') }}?type=" + type;
+        } else {
+            resetFilters();
+        }
     }
 </script>
