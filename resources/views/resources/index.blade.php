@@ -14,7 +14,7 @@
                             Reset Filters
                         </a>
                         <div class="ml-auto">
-                            @if (Auth::user()->user_type == 'Admin' || Auth::user()->user_type == 'Teacher')
+                            @if (Auth::user()->user_type !== 'student')
                                 <a href="{{ route('resources.create') }}" class="mb-2 py-2 px-4 bg-[#40930B] rounded">
                                     Create Resource
                                 </a>
@@ -48,7 +48,7 @@
                                         <p class="mb-3 font-normal text-gray-700">{{ $resource->resource_uploaded_by }}
                                         </p>
                                         <div class="mt-4 flex justify-end">
-                                            @if (Auth::user()->user_type == 'Admin' || Auth::user()->user_type == 'Teacher')
+                                            @if (Auth::user()->user_type !== 'student')
                                                 <a href="{{ route('resources.show', $resource->id) }}"
                                                     class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
                                                 <a href="{{ route('resources.edit', $resource->id) }}"
