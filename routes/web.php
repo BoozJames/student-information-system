@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\GradeController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +25,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('resources', ResourceController::class);
     Route::resource('users', UserController::class);
+    Route::resource('subjects', SubjectController::class);
+    Route::resource('schedules', ScheduleController::class);
+    Route::resource('grades', GradeController::class);
+    Route::resource('posts', PostController::class);
 
     // // List users
     // Route::get('/users', [UserController::class, 'index'])->name('users.index');
