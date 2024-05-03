@@ -65,7 +65,7 @@
                                             {{ $user->email }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $user->user_type }}
+                                            {{ strtoupper($user->user_type) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             <a href="{{ route('users.show', $user->id) }}"

@@ -63,7 +63,7 @@
 
                     <x-slot name="content">
                         <div class="font-medium text-base text-gray-800 mx-auto px-3">
-                            {{ Auth::user()->user_type }}
+                            {{ strtoupper(Auth::user()->user_type )}}
                         </div>
                         <hr>
 
@@ -71,7 +71,7 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        @if (Auth::check() && (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin'))
+                        @if (Auth::check() && (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin'))
                             <x-dropdown-link :href="route('users.index')">
                                 {{ __('Users') }}
                             </x-dropdown-link>
