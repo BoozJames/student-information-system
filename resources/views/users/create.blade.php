@@ -17,7 +17,31 @@
                             <label for="name"
                                 class="block font-medium text-sm text-gray-900">{{ __('Name') }}</label>
                             <input id="name" class="block mt-1 w-full rounded text-gray-900" type="text"
-                                name="name" :value="old('name')" required autofocus />
+                                name="name" required autofocus />
+                        </div>
+
+                        <!-- First Name -->
+                        <div class="mt-4">
+                            <label for="first_name"
+                                class="block font-medium text-sm text-gray-900">{{ __('First Name') }}</label>
+                            <input id="first_name" class="block mt-1 w-full rounded text-gray-900" type="text"
+                                name="first_name" required />
+                        </div>
+
+                        <!-- Middle Name -->
+                        <div class="mt-4">
+                            <label for="middle_name"
+                                class="block font-medium text-sm text-gray-900">{{ __('Middle Name') }}</label>
+                            <input id="middle_name" class="block mt-1 w-full rounded text-gray-900" type="text"
+                                name="middle_name" />
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="mt-4">
+                            <label for="last_name"
+                                class="block font-medium text-sm text-gray-900">{{ __('Last Name') }}</label>
+                            <input id="last_name" class="block mt-1 w-full rounded text-gray-900" type="text"
+                                name="last_name" required />
                         </div>
 
                         <!-- Email Address -->
@@ -25,7 +49,7 @@
                             <label for="email"
                                 class="block font-medium text-sm text-gray-900">{{ __('Email') }}</label>
                             <input id="email" class="block mt-1 w-full rounded text-gray-900" type="email"
-                                name="email" :value="old('email')" required />
+                                name="email" required />
                         </div>
 
                         <!-- Password -->
@@ -52,6 +76,22 @@
                                     <option value="student">Student</option>
                                 @endif
                             </select>
+                        </div>
+
+                        <!-- Section -->
+                        <div class="mt-4">
+                            <label for="section"
+                                class="block font-medium text-sm text-gray-900">{{ __('Section') }}</label>
+                            <input id="section" class="block mt-1 w-full rounded text-gray-900" type="text"
+                                name="section"/>
+                        </div>
+
+                        <!-- Year Level -->
+                        <div class="mt-4">
+                            <label for="year_level"
+                                class="block font-medium text-sm text-gray-900">{{ __('Year Level') }}</label>
+                            <input id="year_level" class="block mt-1 w-full rounded text-gray-900" type="text"
+                                name="year_level"/>
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
