@@ -46,14 +46,35 @@
         </div>
 
 
-        @if ($user->user_type === 'admin')
-            <div>
+        @switch($user->user_type)
+            @case('admin')
                 <x-input-label for="user_type" :value="__('User Type')" />
-                <x-text-input id="user_type" name="user_type" type="text" class="text-gray-900 mt-1 block w-full"
-                    :value="old('user_type', $user->user_type)" required autofocus autocomplete="user_type" />
+                <select id="user_type" name="user_type" class="text-gray-900 mt-1 block w-full rounded" required autofocus
+                    autocomplete="user_type">
+                    <option value="admin" {{ old('user_type', $user->user_type) === 'admin' ? 'selected' : '' }}>Admin</option>
+                    <option value="teacher" {{ old('user_type', $user->user_type) === 'teacher' ? 'selected' : '' }}>Teacher
+                    </option>
+                    <option value="student" {{ old('user_type', $user->user_type) === 'student' ? 'selected' : '' }}>Student
+                    </option>
+                </select>
                 <x-input-error class="mt-2" :messages="$errors->get('user_type')" />
-            </div>
-        @endif
+            @break
+
+            @case('teacher')
+                <x-input-label for="user_type" :value="__('User Type')" />
+                <select id="user_type" name="user_type" class="text-gray-900 mt-1 block w-full rounded" disabled required autofocus
+                    autocomplete="user_type">
+                    <option value="teacher" {{ old('user_type', $user->user_type) === 'teacher' ? 'selected' : '' }}>Teacher
+                    </option>
+                    <option value="student" {{ old('user_type', $user->user_type) === 'student' ? 'selected' : '' }}>Student
+                    </option>
+                </select>
+                <x-input-error class="mt-2" :messages="$errors->get('user_type')" />
+            @break
+
+            @default
+                <!-- Handle other cases if needed -->
+        @endswitch
 
         @if ($user->user_type === 'student')
             <div>
