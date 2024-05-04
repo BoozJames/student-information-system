@@ -2,12 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Subject;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subject>
- */
 class SubjectFactory extends Factory
 {
     /**
@@ -20,17 +17,17 @@ class SubjectFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function definition()
     {
+        // Generate a random subject code format (e.g., ABC123)
+        $subjectCode = strtoupper($this->faker->randomLetter) . strtoupper($this->faker->randomLetter) . strtoupper($this->faker->randomLetter) . $this->faker->randomNumber(3);
+
         return [
             'subject_name' => $this->faker->word,
-            'subject_code' => $this->faker->unique()->word, // Assuming subject code is a unique word
-            'teacher_id' => function () {
-                // Assuming you have User model and want to associate a random user as teacher
-                return \App\Models\User::factory()->create()->id;
-            },
+            'subject_code' => $subjectCode,
+            'teacher_id' => \App\Models\User::factory()->create()->id,
         ];
     }
 }

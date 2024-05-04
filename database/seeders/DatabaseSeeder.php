@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(100)->create();
         Resource::factory(50)->create();
-        Subject::factory()->count(10)->create();
+        Subject::factory()->count(60)->create();
 
         User::factory()->create([
             'name' => 'Test Student',
