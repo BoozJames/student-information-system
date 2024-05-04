@@ -25,11 +25,19 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('resources', ResourceController::class);
     Route::resource('users', UserController::class);
-    Route::resource('subjects', SubjectController::class);
+    // Route::resource('subjects', SubjectController::class);
     Route::resource('schedules', ScheduleController::class);
     Route::resource('grades', GradeController::class);
     Route::resource('posts', PostController::class);
 
+    Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
+    Route::get('/subjects/create', [SubjectController::class, 'create'])->name('subjects.create');
+    Route::post('/subjects', [SubjectController::class, 'store'])->name('subjects.store');
+    Route::get('/subjects/{subject}', [SubjectController::class, 'show'])->name('subjects.show');
+    Route::get('/subjects/{subject}/edit', [SubjectController::class, 'edit'])->name('subjects.edit');
+    Route::put('/subjects/{subject}', [SubjectController::class, 'update'])->name('subjects.update');
+    Route::delete('/subjects/{subject}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
+    
     // // List users
     // Route::get('/users', [UserController::class, 'index'])->name('users.index');
 

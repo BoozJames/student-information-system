@@ -76,7 +76,7 @@
                                 {{ __('Users') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link :href="route('users.index')">
+                            <x-dropdown-link :href="route('subjects.index')">
                                 {{ __('Subjects') }}
                             </x-dropdown-link>
                         @endif
@@ -154,7 +154,7 @@
                         {{ __('Users') }}
                     </x-responsive-nav-link>
 
-                    <x-responsive-nav-link :href="route('users.index')">
+                    <x-responsive-nav-link :href="route('subjects.index')">
                         {{ __('Subjects') }}
                     </x-responsive-nav-link>
                 @endif
