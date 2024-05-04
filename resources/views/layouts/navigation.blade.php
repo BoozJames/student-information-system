@@ -75,6 +75,10 @@
                             <x-dropdown-link :href="route('users.index')">
                                 {{ __('Users') }}
                             </x-dropdown-link>
+
+                            <x-dropdown-link :href="route('users.index')">
+                                {{ __('Subjects') }}
+                            </x-dropdown-link>
                         @endif
 
                         <!-- Authentication -->
@@ -126,7 +130,7 @@
                 {{ __('Resource Center') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('attendance-tracker')">
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('attendance.index')">
                 {{ __('Attendance Tracker') }}
             </x-responsive-nav-link>
         </div>
@@ -145,9 +149,13 @@
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
-                @if (Auth::check() && (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin'))
+                @if (Auth::check() && (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin'))
                     <x-responsive-nav-link :href="route('users.index')">
                         {{ __('Users') }}
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('users.index')">
+                        {{ __('Subjects') }}
                     </x-responsive-nav-link>
                 @endif
 
