@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create New Subject') }}
+            {{ __('Create Class Schedule') }}
         </h2>
     </x-slot>
 
@@ -16,16 +16,16 @@
                         <div class="mt-4">
                             <label for="subject_name"
                                 class="block font-medium text-sm text-gray-900">{{ __('Subject Name') }}</label>
-                            <input id="subject_name" class="block mt-1 w-full rounded text-gray-900" type="text"
-                                name="subject_name" :value="old('subject_name')" required autofocus />
+                            <input id="subject_name" class="block mt-1 w-full rounded text-gray-900" type="text" name="subject_name"
+                                :value="old('subject_name')" required autofocus />
                         </div>
 
                         <!-- Subject Code -->
                         <div class="mt-4">
                             <label for="subject_code"
                                 class="block font-medium text-sm text-gray-900">{{ __('Subject Code') }}</label>
-                            <input id="subject_code" class="block mt-1 w-full rounded text-gray-900" type="text"
-                                name="subject_code" :value="old('subject_code')" required />
+                            <input id="subject_code" class="block mt-1 w-full rounded text-gray-900" type="text" name="subject_code"
+                                :value="old('subject_code')" required />
                         </div>
 
                         <!-- Teacher -->
