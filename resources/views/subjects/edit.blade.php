@@ -15,25 +15,29 @@
 
                         <!-- Subject Name -->
                         <div class="mt-4">
-                            <x-label for="subject_name" :value="__('Subject Name')" />
-
-                            <x-input id="subject_name" class="block mt-1 w-full" type="text" name="subject_name"
-                                :value="$subject->subject_name" required autofocus />
+                            <label for="subject_name"
+                                class="block font-medium text-sm text-gray-900">{{ __('Subject Name') }}</label>
+                            <input id="subject_name"
+                                class="block mt-1 w-full rounded text-gray-900"
+                                type="text" name="subject_name" value="{{ $subject->subject_name }}" required
+                                autofocus />
                         </div>
 
                         <!-- Subject Code -->
                         <div class="mt-4">
-                            <x-label for="subject_code" :value="__('Subject Code')" />
-
-                            <x-input id="subject_code" class="block mt-1 w-full" type="text" name="subject_code"
-                                :value="$subject->subject_code" required />
+                            <label for="subject_code"
+                                class="block font-medium text-sm text-gray-900">{{ __('Subject Code') }}</label>
+                            <input id="subject_code"
+                                class="block mt-1 w-full rounded text-gray-900"
+                                type="text" name="subject_code" value="{{ $subject->subject_code }}" required />
                         </div>
 
                         <!-- Teacher -->
                         <div class="mt-4">
-                            <x-label for="teacher_id" :value="__('Teacher')" />
-
-                            <select id="teacher_id" name="teacher_id" class="block mt-1 w-full">
+                            <label for="teacher_id"
+                                class="block font-medium text-sm text-gray-900">{{ __('Teacher') }}</label>
+                            <select id="teacher_id" name="teacher_id"
+                                class="block mt-1 w-full rounded text-gray-900">
                                 <option value="">Select Teacher</option>
                                 @foreach ($teachers as $teacher)
                                     <option value="{{ $teacher->id }}"
@@ -43,9 +47,10 @@
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
-                            <x-button class="ml-4">
+                            <button type="submit"
+                                class="ml-4 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#40930B] hover:bg-[#355521] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                                 {{ __('Update Subject') }}
-                            </x-button>
+                            </button>
                         </div>
                     </form>
                 </div>
