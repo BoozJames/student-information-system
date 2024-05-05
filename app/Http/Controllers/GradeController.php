@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grade;
+use App\Models\User;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,7 +49,12 @@ class GradeController extends Controller
     {
         // Only admins can create grades
         if (strtolower(Auth::user()->user_type) === 'admin') {
-            return view('grades.create');
+            // Retrieve all users and subjects
+            $users = User::all();
+            $subjects = Subject::all();
+
+            // Pass users and subjects to the create view
+            return view('grades.create', compact('users', 'subjects'));
         } else {
             abort(403, 'Unauthorized action.');
         }
