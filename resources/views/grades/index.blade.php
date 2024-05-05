@@ -13,17 +13,19 @@
                         <a href="#" onclick="resetFilters()" class="mr-4 mb-2 py-2 px-4 bg-[#40930B] rounded">
                             Reset Filters
                         </a>
-                        <div class="ml-auto">
-                            <a href="{{ route('subjects.create') }}" class="mb-2 py-2 px-4 bg-[#40930B] rounded">
-                                Create Subject
-                            </a>
-                        </div>
+                        @can('create', App\Models\Grade::class)
+                            <div class="ml-auto">
+                                <a href="{{ route('grades.create') }}" class="mb-2 py-2 px-4 bg-[#40930B] rounded">
+                                    Create Grade
+                                </a>
+                            </div>
+                        @endcan
                     </nav>
                     <div class="min-w-full align-middle">
                         <div class="my-2 bg-white">
                             <div class="flex flex-wrap items-center justify-between">
                                 <!-- Search form -->
-                                <form method="GET" action="{{ route('subjects.index') }}"
+                                <form method="GET" action="{{ route('grades.index') }}"
                                     class="flex flex-wrap items-center">
                                     <input type="text" name="search" placeholder="Search..."
                                         class="mr-2 px-4 py-2 border rounded focus:border-yellow-300 text-gray-900">
@@ -38,17 +40,15 @@
                                 <tr>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Subject
-                                            Name</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">User</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Subject
-                                            Code</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Subject</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Teacher</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Value</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
@@ -58,29 +58,33 @@
                             </thead>
 
                             <tbody class="bg-white divide-y divide-gray-200 divide-solid">
-                                @foreach ($subjects as $subject)
+                                @foreach ($grades as $grade)
                                     <tr class="bg-white">
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $subject->subject_name }}
+                                            {{ $grade->user->name }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $subject->subject_code }}
+                                            {{ $grade->subject->subject_name }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $subject->teacher->name }}
+                                            {{ $grade->value }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            <a href="{{ route('subjects.show', $subject->id) }}"
+                                            <a href="{{ route('grades.show', $grade->id) }}"
                                                 class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
-                                            <a href="{{ route('subjects.edit', $subject->id) }}"
-                                                class="text-green-500 hover:text-green-700 mr-2">Edit</a>
-                                            <form action="{{ route('subjects.destroy', $subject->id) }}" method="POST"
-                                                class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="text-red-500 hover:text-red-700">Delete</button>
-                                            </form>
+                                            @can('update', $grade)
+                                                <a href="{{ route('grades.edit', $grade->id) }}"
+                                                    class="text-green-500 hover:text-green-700 mr-2">Edit</a>
+                                            @endcan
+                                            @can('delete', $grade)
+                                                <form action="{{ route('grades.destroy', $grade->id) }}" method="POST"
+                                                    class="inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="text-red-500 hover:text-red-700">Delete</button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
@@ -90,7 +94,7 @@
 
                     <!-- Pagination Links -->
                     <div class="mt-2">
-                        {{ $subjects->links() }}
+                        {{ $grades->links() }}
                     </div>
 
                 </div>
@@ -101,6 +105,6 @@
 
 <script>
     function resetFilters() {
-        window.location.href = "{{ route('subjects.index') }}";
+        window.location.href = "{{ route('grades.index') }}";
     }
 </script>
