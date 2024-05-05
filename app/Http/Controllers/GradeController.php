@@ -104,12 +104,17 @@ class GradeController extends Controller
     {
         // Only admins can edit grades
         if (strtolower(Auth::user()->user_type) === 'admin') {
-            return view('grades.edit', compact('grade'));
+            // Retrieve all users and subjects
+            $users = User::all();
+            $subjects = Subject::all();
+
+            // Pass grade, users, and subjects to the edit view
+            return view('grades.edit', compact('grade', 'users', 'subjects'));
         } else {
             abort(403, 'Unauthorized action.');
         }
     }
-
+    
     /**
      * Update the specified grade in storage.
      */
