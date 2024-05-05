@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('grades.index')" :active="request()->routeIs('grades')">
+                    <x-nav-link :href="route('grades.index')" :active="request()->routeIs('grades.index')">
                         {{ __('Grades') }}
                     </x-nav-link>
                 </div>
@@ -122,7 +122,7 @@
                 {{ __('Class Schedule') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('grades')">
+            <x-responsive-nav-link :href="route('grades.index')" :active="request()->routeIs('grades.index')">
                 {{ __('Grades') }}
             </x-responsive-nav-link>
 
