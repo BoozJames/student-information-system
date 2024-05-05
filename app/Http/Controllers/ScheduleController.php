@@ -3,16 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule;
+use App\Models\User;
+use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // Only admins and teachers can access the schedule index
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
+            // Start with querying all schedules
+            $query = Schedule::query();
+
+            // Search functionality
+            if ($request->filled('search')) {
+                $search = $request->input('search');
+                // Add search conditions to the query
+                $query->where('day_of_week', 'like', "%$search%")
+                    ->orWhere('start_time', 'like', "%$search%")
+                    ->orWhere('end_time', 'like', "%$search%");
+            }
+
+            // Paginate the results
+            $schedules = $query->paginate(10);
+
+            return view('schedules.index', compact('schedules'));
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -20,7 +43,17 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        //
+        // Only admins can create schedules
+        if (strtolower(Auth::user()->user_type) === 'admin') {
+            // Retrieve users and subjects
+            $users = User::all();
+            $subjects = Subject::all();
+
+            // Pass users and subjects to the create view
+            return view('schedules.create', compact('users', 'subjects'));
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -28,7 +61,26 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Only admins can create schedules
+        if (strtolower(Auth::user()->user_type) === 'admin') {
+            // Validation rules for creating a schedule
+            $request->validate([
+                'user_id' => 'required',
+                'subject_id' => 'required',
+                'day_of_week' => 'required',
+                'start_time' => 'required',
+                'end_time' => 'required',
+                'attendance' => 'required',
+            ]);
+
+            // Create the schedule
+            Schedule::create($request->all());
+
+            return redirect()->route('schedules.index')
+                ->with('success', 'Schedule created successfully.');
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -36,7 +88,12 @@ class ScheduleController extends Controller
      */
     public function show(Schedule $schedule)
     {
-        //
+        // Only admins and teachers can view schedules
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
+            return view('schedules.show', compact('schedule'));
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -44,7 +101,17 @@ class ScheduleController extends Controller
      */
     public function edit(Schedule $schedule)
     {
-        //
+        // Only admins can edit schedules
+        if (strtolower(Auth::user()->user_type) === 'admin') {
+            // Retrieve users and subjects
+            $users = User::all();
+            $subjects = Subject::all();
+
+            // Pass schedule, users, and subjects to the edit view
+            return view('schedules.edit', compact('schedule', 'users', 'subjects'));
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -52,7 +119,26 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, Schedule $schedule)
     {
-        //
+        // Only admins can update schedules
+        if (strtolower(Auth::user()->user_type) === 'admin') {
+            // Validation rules for updating a schedule
+            $request->validate([
+                'user_id' => 'required',
+                'subject_id' => 'required',
+                'day_of_week' => 'required',
+                'start_time' => 'required',
+                'end_time' => 'required',
+                'attendance' => 'required',
+            ]);
+
+            // Update the schedule
+            $schedule->update($request->all());
+
+            return redirect()->route('schedules.index')
+                ->with('success', 'Schedule updated successfully.');
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -60,6 +146,15 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        //
+        // Only admins can delete schedules
+        if (strtolower(Auth::user()->user_type) === 'admin') {
+            // Delete the schedule
+            $schedule->delete();
+
+            return redirect()->route('schedules.index')
+                ->with('success', 'Schedule deleted successfully.');
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 }
