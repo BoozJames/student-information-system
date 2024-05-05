@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Grade;
 use App\Models\Resource;
 use App\Models\User;
 use App\Models\Subject;
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
         User::factory(100)->create();
         Resource::factory(50)->create();
         Subject::factory()->count(60)->create();
+        Grade::factory()->count(60)->create();
 
         User::factory()->create([
             'name' => 'Test Student',
