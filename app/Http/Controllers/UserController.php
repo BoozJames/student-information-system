@@ -86,9 +86,6 @@ class UserController extends Controller
             // Log the user creation
             Log::info('User created successfully.', ['user_id' => Auth::id(), 'email' => $request->email]);
 
-            // // Flash success message to session
-            // session()->flash('success', 'User created successfully.');
-
             return redirect()->route('users.index')
                 ->with('success', 'User created successfully.');
         } else {
