@@ -34,8 +34,7 @@
                             <select id="post_type" name="post_type" class="block mt-1 w-full rounded text-gray-900">
                                 <option value="">Select Post Type</option>
                                 <option value="news">News</option>
-                                <option value="blog">Blog</option>
-                                <option value="tutorial">Tutorial</option>
+                                <option value="events">Events</option>
                             </select>
                         </div>
 
