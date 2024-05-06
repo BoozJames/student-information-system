@@ -70,7 +70,7 @@ class ScheduleController extends Controller
                 'day_of_week' => 'required',
                 'start_time' => 'required',
                 'end_time' => 'required',
-                'attendance' => 'required',
+                // 'attendance' => 'required',
             ]);
 
             // Create the schedule
@@ -128,7 +128,7 @@ class ScheduleController extends Controller
                 'day_of_week' => 'required',
                 'start_time' => 'required',
                 'end_time' => 'required',
-                'attendance' => 'required',
+                // 'attendance' => 'required',
             ]);
 
             // Update the schedule
