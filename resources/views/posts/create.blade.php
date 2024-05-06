@@ -42,7 +42,7 @@
                         <div class="mt-4">
                             <label for="user_id"
                                 class="block font-medium text-sm text-gray-900">{{ __('Uploaded By') }}</label>
-                            <select id="user_id" name="user_id" class="block mt-1 w-full rounded text-gray-900">
+                            <select id="user_id" name="post_uploaded_by" class="block mt-1 w-full rounded text-gray-900">
                                 <option value="">Select User</option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
