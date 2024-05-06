@@ -86,8 +86,8 @@ class UserController extends Controller
             // Log the user creation
             Log::info('User created successfully.', ['user_id' => Auth::id(), 'email' => $request->email]);
 
-            // Flash success message to session
-            session()->flash('success', 'User created successfully.');
+            // // Flash success message to session
+            // session()->flash('success', 'User created successfully.');
 
             return redirect()->route('users.index')
                 ->with('success', 'User created successfully.');
@@ -139,7 +139,7 @@ class UserController extends Controller
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email,' . $id,
                 'password' => 'nullable|min:8',
-                'user_type' => 'required|in:Admin,Teacher,Student', // Example user types
+                // 'user_type' => 'required|in:Admin,Teacher,Student', // Example user types
             ]);
 
             // Find the user and update
