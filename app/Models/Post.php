@@ -15,4 +15,10 @@ class Post extends Model
         'post_type',
         'post_uploaded_by',
     ];
+
+    // Define the 'user' relationship
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'post_uploaded_by');
+    }
 }
