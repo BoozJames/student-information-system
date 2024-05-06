@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('schedules', ScheduleController::class);
     Route::resource('grades', GradeController::class);
     Route::resource('posts', PostController::class);
+    Route::resource('attendance', AttendanceController::class);
 
     Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
     Route::get('/subjects/create', [SubjectController::class, 'create'])->name('subjects.create');
@@ -37,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/subjects/{subject}/edit', [SubjectController::class, 'edit'])->name('subjects.edit');
     Route::put('/subjects/{subject}', [SubjectController::class, 'update'])->name('subjects.update');
     Route::delete('/subjects/{subject}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
-    
+
     // // List users
     // Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
