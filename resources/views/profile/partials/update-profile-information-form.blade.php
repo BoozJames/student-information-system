@@ -34,7 +34,7 @@
         <div>
             <x-input-label for="middle_name" :value="__('Middle Name')" />
             <x-text-input id="middle_name" name="middle_name" type="text" class="text-gray-900 mt-1 block w-full"
-                :value="old('middle_name', $user->middle_name)" required autofocus autocomplete="middle_name" />
+                :value="old('middle_name', $user->middle_name)" autofocus autocomplete="middle_name" />
             <x-input-error class="mt-2" :messages="$errors->get('middle_name')" />
         </div>
 
@@ -62,8 +62,8 @@
 
             @case('teacher')
                 <x-input-label for="user_type" :value="__('User Type')" />
-                <select id="user_type" name="user_type" class="text-gray-900 mt-1 block w-full rounded" disabled required autofocus
-                    autocomplete="user_type">
+                <select id="user_type" name="user_type" class="text-gray-900 mt-1 block w-full rounded" disabled required
+                    autofocus autocomplete="user_type">
                     <option value="teacher" {{ old('user_type', $user->user_type) === 'teacher' ? 'selected' : '' }}>Teacher
                     </option>
                     <option value="student" {{ old('user_type', $user->user_type) === 'student' ? 'selected' : '' }}>Student
