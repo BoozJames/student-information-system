@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Resource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,8 +40,11 @@ class ResourceController extends Controller
      */
     public function create()
     {
+        // Fetch all users where user_type is teacher
+        $users = User::where('user_type', 'teacher')->get();
+
         if (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin') {
-            return view('resources.create');
+            return view('resources.create', compact('users'));
         } else {
             abort(403, 'Unauthorized action.');
         }
@@ -62,7 +66,7 @@ class ResourceController extends Controller
 
             Resource::create($request->all());
 
-            return redirect()->route('resource.index')
+            return redirect()->route('resources.index')
                 ->with('success', 'Resource created successfully.');
         } else {
             abort(403, 'Unauthorized action.');
@@ -105,7 +109,7 @@ class ResourceController extends Controller
 
             $resource->update($request->all());
 
-            return redirect()->route('resource.index')
+            return redirect()->route('resources.index')
                 ->with('success', 'Resource updated successfully');
         } else {
             abort(403, 'Unauthorized action.');
