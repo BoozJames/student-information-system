@@ -40,6 +40,10 @@
                                 <tr>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Subject</span>
+                                    </th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left">
+                                        <span
                                             class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Day
                                             of Week</span>
                                     </th>
@@ -63,6 +67,9 @@
                             <tbody class="bg-white divide-y divide-gray-200 divide-solid">
                                 @foreach ($schedules as $schedule)
                                     <tr class="bg-white">
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            {{ $schedule->subject->subject_name }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ $schedule->day_of_week }}
                                         </td>
