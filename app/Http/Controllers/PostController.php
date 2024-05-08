@@ -19,17 +19,25 @@ class PostController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $query = Post::query();
+        $postQuery = Post::query();
 
         // Search functionality
         if ($request->filled('search')) {
             $search = $request->input('search');
-            $query->where('post_title', 'like', "%$search%")
-                ->orWhere('post_content', 'like', "%$search%");
+            $postQuery->where(function ($query) use ($search) {
+                $query->where('post_title', 'like', "%$search%")
+                    ->orWhere('post_content', 'like', "%$search%")
+                    ->orWhere('post_type', 'like', "%$search%");
+            });
         }
 
-        // Paginate posts
-        $posts = $query->paginate(10);
+        // Add filter for resource_type
+        if ($request->filled('type')) {
+            $type = $request->input('type');
+            $postQuery->where('post_type', $type);
+        }
+
+        $posts = $postQuery->paginate()->appends(request()->query());
 
         return view('posts.index', compact('posts'));
     }
