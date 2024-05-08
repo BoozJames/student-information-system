@@ -52,16 +52,20 @@
                                     <div class="p-6">
                                         <a href="{{ route('resources.show', $resource->id) }}">
                                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                                                {{ $resource->resource_name }}</h5>
+                                                {{ $resource->resource_name }}
+                                            </h5>
                                         </a>
                                         <p class="mb-3 font-normal text-gray-700">{{ $resource->resource_type }}</p>
+                                        @if ($resource->user)
+                                            <p class="mb-3 font-normal text-gray-700">
+                                                Uploaded By: {{ $resource->user->first_name ?? '' }}
+                                                {{ $resource->user->middle_name ? $resource->user->middle_name . ' ' : '' }}
+                                                {{ $resource->user->last_name ?? '' }}
+                                            </p>
+                                        @endif
                                         <a href="{{ Storage::url('resources/' . $resource->resource_filename) }}"
                                             class="text-blue-600 hover:text-blue-800"
                                             download="{{ $resource->resource_filename }}">Download</a>
-                                        {{-- <a href="{{ route('download.resource', $resource->id) }}"
-                                            class="mb-3 font-normal text-gray-700">{{ $resource->resource_filename }}</a> --}}
-                                        <p class="mb-3 font-normal text-gray-700">{{ $resource->resource_uploaded_by }}
-                                        </p>
                                         <div class="mt-4 flex justify-end">
                                             @if (Auth::user()->user_type !== 'student')
                                                 <a href="{{ route('resources.show', $resource->id) }}"

@@ -16,4 +16,12 @@ class Resource extends Model
         'resource_url',
         'resource_uploaded_by',
     ];
+
+    /**
+     * Get the user that uploaded the resource.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'resource_uploaded_by');
+    }
 }

@@ -12,9 +12,6 @@ use Illuminate\Http\File;
 
 class ResourceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $resourceQuery = Resource::query();
@@ -24,7 +21,11 @@ class ResourceController extends Controller
             $resourceQuery->where(function ($query) use ($search) {
                 $query->where('resource_name', 'like', "%$search%")
                     ->orWhere('resource_type', 'like', "%$search%")
-                    ->orWhere('resource_uploaded_by', 'like', "%$search%");
+                    ->orWhereHas('user', function ($query) use ($search) {
+                        $query->where('first_name', 'like', "%$search%")
+                            ->orWhere('middle_name', 'like', "%$search%")
+                            ->orWhere('last_name', 'like', "%$search%");
+                    });
             });
         }
 
@@ -36,6 +37,9 @@ class ResourceController extends Controller
             $type = $request->input('type');
             $resourceQuery->where('resource_type', $type);
         }
+
+        // Include users
+        $resourceQuery->with('user');
 
         $resources = $resourceQuery->paginate()->appends(request()->query());
         return view('resources.index', compact('resources', 'resourceTypes'));
@@ -105,8 +109,11 @@ class ResourceController extends Controller
      */
     public function edit(Resource $resource)
     {
+        // Fetch all users where user_type is teacher
+        $users = User::where('user_type', 'teacher')->get();
+
         if (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin') {
-            return view('resources.edit', compact('resource'));
+            return view('resources.edit', compact('resource', 'users'));
         } else {
             abort(403, 'Unauthorized action.');
         }
@@ -121,15 +128,33 @@ class ResourceController extends Controller
             $request->validate([
                 'resource_name' => 'required',
                 'resource_type' => 'required',
-                'resource_filename' => 'required',
-                'resource_url' => 'required',
                 'resource_uploaded_by' => 'required',
+                'resource_file' => 'nullable|file',
             ]);
 
-            $resource->update($request->all());
+            // Update resource fields
+            $resource->update([
+                'resource_name' => $request->input('resource_name'),
+                'resource_type' => $request->input('resource_type'),
+                'resource_uploaded_by' => $request->input('resource_uploaded_by'),
+            ]);
 
-            return redirect()->route('resources.index')
-                ->with('success', 'Resource updated successfully');
+            // Check if a new file is uploaded
+            if ($request->hasFile('resource_file')) {
+                $file = $request->file('resource_file');
+                $fileName = $file->getClientOriginalName();
+
+                // Store file in storage/app/public/resources directory
+                $file->storeAs('public/resources', $fileName);
+
+                // Update resource file details
+                $resource->update([
+                    'resource_filename' => $fileName,
+                    'resource_url' => Storage::url('resources/' . $fileName),
+                ]);
+            }
+
+            return redirect()->route('resources.index')->with('success', 'Resource updated successfully');
         } else {
             abort(403, 'Unauthorized action.');
         }
