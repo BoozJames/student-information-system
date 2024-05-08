@@ -5,7 +5,6 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Resource;
 use Faker\Generator as Faker;
-use Illuminate\Support\Facades\Storage;
 
 class ResourceFactory extends Factory
 {
@@ -16,25 +15,17 @@ class ResourceFactory extends Factory
      */
     public function definition(): array
     {
-        $faker = $this->faker;
-
-        // Generate a unique filename
-        $filename = $faker->word() . '.pdf'; // You can use word() or sentence() depending on your preference
-
-        // Generate a random content for the file (optional)
-        $content = $faker->text(200);
-
-        // Store the file in Laravel's filesystem
-        Storage::put('public/resources/' . $filename, $content);
-
         return [
-            'resource_name' => $faker->sentence(),
-            'resource_type' => $faker->randomElement(['event', 'announcement']), // Set the resource type randomly to 'event' or 'announcement'
-            'resource_filename' => $filename, // Assign the generated filename
-            'resource_url' => 'storage/resources/' . $filename, // Set the file path in Laravel
-            'resource_uploaded_by' => $faker->name,
-            'created_at' => $faker->dateTimeBetween('-1 year', 'now'),
-            'updated_at' => $faker->dateTimeBetween('-1 year', 'now'),
+            'resource_name' => $this->faker->sentence(),
+            'resource_type' => $this->faker->randomElement(['reports', 'activities', 'forms']),
+            'resource_filename' => $this->faker->word() . '.pdf',
+            'resource_url' => 'storage/resources/' . $this->faker->word() . '.pdf',
+            'resource_uploaded_by' => function () {
+                // Get a random user ID from the users table
+                return \App\Models\User::inRandomOrder()->first()->id;
+            },
+            'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }
