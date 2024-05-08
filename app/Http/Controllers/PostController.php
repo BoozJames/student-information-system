@@ -15,7 +15,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         // Check if the authenticated user is authorized
-        if (!Auth::check() || (Auth::user()->user_type !== 'teacher' && Auth::user()->user_type !== 'admin')) {
+        if (!Auth::check() || (Auth::user()->user_type !== 'teacher' && Auth::user()->user_type !== 'admin' && Auth::user()->user_type !== 'student')) {
             abort(403, 'Unauthorized action.');
         }
 
