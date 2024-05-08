@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\File;
 
 class ResourceController extends Controller
 {
@@ -64,12 +65,25 @@ class ResourceController extends Controller
             $request->validate([
                 'resource_name' => 'required',
                 'resource_type' => 'required',
-                'resource_filename' => 'required',
-                'resource_url' => 'required',
                 'resource_uploaded_by' => 'required',
+                'resource_file' => 'required|file',
             ]);
 
-            Resource::create($request->all());
+            $file = $request->file('resource_file');
+            $fileName = $file->getClientOriginalName();
+
+            // Store file in storage/app/public/resource directory
+            $file->storeAs('public/resources', $fileName);
+
+            $resource = new Resource([
+                'resource_name' => $request->get('resource_name'),
+                'resource_type' => $request->get('resource_type'),
+                'resource_filename' => $fileName,
+                'resource_url' => Storage::url('resources/' . $fileName), // Get URL from storage
+                'resource_uploaded_by' => $request->get('resource_uploaded_by'),
+            ]);
+
+            $resource->save();
 
             return redirect()->route('resources.index')
                 ->with('success', 'Resource created successfully.');
@@ -127,9 +141,13 @@ class ResourceController extends Controller
     public function destroy(Resource $resource)
     {
         if (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin') {
+            // Delete the file from storage
+            Storage::delete('public/resources/' . $resource->resource_filename);
+
+            // Delete the resource
             $resource->delete();
 
-            return redirect()->route('resource.index')
+            return redirect()->route('resources.index')
                 ->with('success', 'Resource deleted successfully');
         } else {
             abort(403, 'Unauthorized action.');

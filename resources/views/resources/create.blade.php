@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-yellow-300">
-                    <form method="POST" action="{{ route('resources.store') }}">
+                    <form method="POST" action="{{ route('resources.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <!-- Resource Name -->
@@ -40,20 +40,12 @@
                             </select>
                         </div>
 
-                        <!-- Resource Filename -->
+                        <!-- Resource File -->
                         <div class="mt-4">
-                            <label for="resource_filename"
-                                class="block font-medium text-sm text-gray-900">{{ __('File Name') }}</label>
-                            <input id="resource_filename" class="block mt-1 w-full rounded text-gray-900" type="text"
-                                name="resource_filename" required />
-                        </div>
-
-                        <!-- Resource URL -->
-                        <div class="mt-4">
-                            <label for="resource_url"
-                                class="block font-medium text-sm text-gray-900">{{ __('URL') }}</label>
-                            <input id="resource_url" class="block mt-1 w-full rounded text-gray-900" type="text"
-                                name="resource_url" required />
+                            <label for="resource_file"
+                                class="block font-medium text-sm text-gray-900">{{ __('File') }}</label>
+                            <input id="resource_file" class="block mt-1 w-full rounded text-gray-900" type="file"
+                                name="resource_file" required />
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
