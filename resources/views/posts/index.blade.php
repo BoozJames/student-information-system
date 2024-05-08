@@ -64,12 +64,10 @@
                                             class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Uploaded
                                             By</span>
                                     </th>
-                                    @if (Auth::user()->user_type !== 'student')
-                                        <th class="px-6 py-3 bg-gray-50 text-left">
-                                            <span
-                                                class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</span>
-                                        </th>
-                                    @endif
+                                    <th class="px-6 py-3 bg-gray-50 text-left">
+                                        <span
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</span>
+                                    </th>
                                 </tr>
                             </thead>
 
@@ -88,10 +86,10 @@
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ $post->post_uploaded_by }}
                                         </td>
-                                        @if (Auth::user()->user_type !== 'student')
-                                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                                <a href="{{ route('posts.show', $post->id) }}"
-                                                    class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            <a href="{{ route('posts.show', $post->id) }}"
+                                                class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
+                                            @if (Auth::user()->user_type !== 'student')
                                                 <a href="{{ route('posts.edit', $post->id) }}"
                                                     class="text-green-500 hover:text-green-700 mr-2">Edit</a>
                                                 <form action="{{ route('posts.destroy', $post->id) }}" method="POST"
@@ -101,8 +99,8 @@
                                                     <button type="submit"
                                                         class="text-red-500 hover:text-red-700">Delete</button>
                                                 </form>
-                                            </td>
-                                        @endif
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

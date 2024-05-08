@@ -87,19 +87,19 @@ class PostController extends Controller
     public function show(Post $post)
     {
         // Check if the authenticated user is authorized to view the post
-        if (!Auth::check() || (Auth::user()->user_type !== 'teacher' && Auth::user()->user_type !== 'admin')) {
-            abort(403, 'Unauthorized action.');
-        }
+        // if (!Auth::check() || (Auth::user()->user_type !== 'teacher' && Auth::user()->user_type !== 'admin' && Auth::user()->user_type !== 'student')) {
+        //     abort(403, 'Unauthorized action.');
+        // }
 
         // Eager load the 'user' relationship
-        $post->load('user');
+        // $post->load('user');
 
         // Check if the post has a related user
-        if ($post->user) {
+        // if ($post->user) {
             return view('posts.show', compact('post'));
-        } else {
-            abort(404, 'User not found for this post.');
-        }
+        // } else {
+        //     abort(404, 'User not found for this post.');
+        // }
     }
     /**
      * Show the form for editing the specified resource.

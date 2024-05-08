@@ -10,8 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-yellow-300">
                     <div>
-                        <p class="text-gray-900"><strong>User:</strong> {{ $post->user->first_name }}
-                            {{ $post->user->middle_name }} {{ $post->user->last_name }}</p>
+                        {{-- <p class="text-gray-900"><strong>User:</strong> {{ $post->user->first_name }}
+                            {{ $post->user->middle_name }} {{ $post->user->last_name }}</p> --}}
                         <p class="text-gray-900"><strong>Title:</strong> {{ $post->post_title }}</p>
                         <p class="text-gray-900"><strong>Content:</strong> {{ $post->post_content }}</p>
                         <p class="text-gray-900"><strong>Type:</strong> {{ ucfirst($post->post_type) }}</p>
