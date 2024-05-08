@@ -15,27 +15,30 @@ class ScheduleController extends Controller
      */
     public function index(Request $request)
     {
-        // Only admins and teachers can access the schedule index
-        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
-            // Start with querying all schedules
-            $query = Schedule::query();
+        // Start with querying schedules
+        $query = Schedule::query();
 
-            // Search functionality
-            if ($request->filled('search')) {
-                $search = $request->input('search');
-                // Add search conditions to the query
-                $query->where('day_of_week', 'like', "%$search%")
-                    ->orWhere('start_time', 'like', "%$search%")
-                    ->orWhere('end_time', 'like', "%$search%");
-            }
-
-            // Paginate the results
-            $schedules = $query->paginate(10);
-
-            return view('schedules.index', compact('schedules'));
-        } else {
-            abort(403, 'Unauthorized action.');
+        // Adjust the query based on user type
+        if (strtolower(Auth::user()->user_type) === 'student') {
+            // Filter schedules for students based on their ID
+            $query->whereHas('user', function ($studentQuery) {
+                $studentQuery->where('id', Auth::id());
+            });
         }
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            // Add search conditions to the query
+            $query->where('day_of_week', 'like', "%$search%")
+                ->orWhere('start_time', 'like', "%$search%")
+                ->orWhere('end_time', 'like', "%$search%");
+        }
+
+        // Paginate the results
+        $schedules = $query->paginate(10);
+
+        return view('schedules.index', compact('schedules'));
     }
 
     /**
@@ -44,7 +47,7 @@ class ScheduleController extends Controller
     public function create()
     {
         // Only admins can create schedules
-        if (strtolower(Auth::user()->user_type) === 'admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Retrieve users and subjects
             $users = User::all();
             $subjects = Subject::all();
@@ -62,7 +65,7 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         // Only admins can create schedules
-        if (strtolower(Auth::user()->user_type) === 'admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Validation rules for creating a schedule
             $request->validate([
                 'user_id' => 'required',
@@ -102,7 +105,7 @@ class ScheduleController extends Controller
     public function edit(Schedule $schedule)
     {
         // Only admins can edit schedules
-        if (strtolower(Auth::user()->user_type) === 'admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Retrieve users and subjects
             $users = User::all();
             $subjects = Subject::all();
@@ -120,7 +123,7 @@ class ScheduleController extends Controller
     public function update(Request $request, Schedule $schedule)
     {
         // Only admins can update schedules
-        if (strtolower(Auth::user()->user_type) === 'admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Validation rules for updating a schedule
             $request->validate([
                 'user_id' => 'required',
@@ -147,7 +150,7 @@ class ScheduleController extends Controller
     public function destroy(Schedule $schedule)
     {
         // Only admins can delete schedules
-        if (strtolower(Auth::user()->user_type) === 'admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Delete the schedule
             $schedule->delete();
 
