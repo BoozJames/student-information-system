@@ -15,15 +15,22 @@ class GradeController extends Controller
      */
     public function index(Request $request)
     {
-        // Only admins and teachers can access the grades index
-        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
-            // Start with querying all grades
-            $query = Grade::query();
+        // Start with querying grades
+        $query = Grade::query();
 
-            // Search functionality
-            if ($request->filled('search')) {
-                $search = $request->input('search');
-                // Add search conditions to the query
+        // Adjust the query based on user type
+        if (strtolower(Auth::user()->user_type) === 'student') {
+            // Filter grades for students
+            $query->whereHas('user', function ($userQuery) {
+                $userQuery->where('id', Auth::id());
+            });
+        }
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            // Add search conditions to the query
+            $query->where(function ($query) use ($search) {
                 $query->whereHas('user', function ($userQuery) use ($search) {
                     $userQuery->where('name', 'like', "%$search%")
                         ->orWhere('email', 'like', "%$search%");
@@ -31,15 +38,13 @@ class GradeController extends Controller
                     $subjectQuery->where('subject_name', 'like', "%$search%")
                         ->orWhere('subject_code', 'like', "%$search%");
                 })->orWhere('value', 'like', "%$search%");
-            }
-
-            // Paginate the results
-            $grades = $query->paginate();
-
-            return view('grades.index', compact('grades'));
-        } else {
-            abort(403, 'Unauthorized action.');
+            });
         }
+
+        // Paginate the results
+        $grades = $query->paginate();
+
+        return view('grades.index', compact('grades'));
     }
 
     /**
@@ -48,7 +53,7 @@ class GradeController extends Controller
     public function create()
     {
         // Only admins can create grades
-        if (strtolower(Auth::user()->user_type) === 'admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Retrieve all users and subjects
             $users = User::all();
             $subjects = Subject::all();
@@ -66,7 +71,7 @@ class GradeController extends Controller
     public function store(Request $request)
     {
         // Only admins can create grades
-        if (strtolower(Auth::user()->user_type) === 'admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Validation rules for creating a grade
             $request->validate([
                 'user_id' => 'required|exists:users,id',
@@ -114,14 +119,14 @@ class GradeController extends Controller
             abort(403, 'Unauthorized action.');
         }
     }
-    
+
     /**
      * Update the specified grade in storage.
      */
     public function update(Request $request, Grade $grade)
     {
         // Only admins can update grades
-        if (strtolower(Auth::user()->user_type) === 'admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Validation rules for updating a grade
             $request->validate([
                 'user_id' => 'required|exists:users,id',
@@ -145,7 +150,7 @@ class GradeController extends Controller
     public function destroy(Grade $grade)
     {
         // Only admins can delete grades
-        if (strtolower(Auth::user()->user_type) === 'admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             $grade->delete();
 
             return redirect()->route('grades.index')
