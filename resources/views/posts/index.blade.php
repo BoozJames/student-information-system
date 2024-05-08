@@ -78,8 +78,9 @@
                                             {{ $post->post_title }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $post->post_content }}
-                                        </td>
+                                            {{-- Limit to 20 characters only --}}
+                                            {{ Illuminate\Support\Str::limit($post->post_content, 20) }}
+                                        </td>                                        
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ $post->post_type }}
                                         </td>
