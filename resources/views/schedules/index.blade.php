@@ -78,10 +78,10 @@
                                             {{ $schedule->day_of_week }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $schedule->start_time }}
+                                            {{ date('h:ia', strtotime($schedule->start_time)) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $schedule->end_time }}
+                                            {{ date('h:ia', strtotime($schedule->end_time)) }}
                                         </td>
                                         @if (Auth::user()->user_type !== 'student')
                                             <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
