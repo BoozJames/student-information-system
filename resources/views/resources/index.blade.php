@@ -31,7 +31,7 @@
                                 <form method="GET" action="{{ route('resources.index') }}"
                                     class="flex flex-wrap items-center">
                                     <input type="text" name="search" placeholder="Search..."
-                                        class="mr-2 px-4 py-2 border rounded focus:border-yellow-300">
+                                        class="mr-2 px-4 py-2 border rounded focus:border-yellow-300 text-gray-900">
                                     <button type="submit" class="bg-[#40930B] px-4 py-2 rounded">Search</button>
                                 </form>
                                 <!-- Dropdown filter -->
@@ -55,7 +55,11 @@
                                                 {{ $resource->resource_name }}</h5>
                                         </a>
                                         <p class="mb-3 font-normal text-gray-700">{{ $resource->resource_type }}</p>
-                                        <p class="mb-3 font-normal text-gray-700">{{ $resource->resource_filename }}</p>
+                                        <a href="{{ Storage::url('resources/' . $resource->resource_filename) }}"
+                                            class="text-blue-600 hover:text-blue-800"
+                                            download="{{ $resource->resource_filename }}">Download</a>
+                                        {{-- <a href="{{ route('download.resource', $resource->id) }}"
+                                            class="mb-3 font-normal text-gray-700">{{ $resource->resource_filename }}</a> --}}
                                         <p class="mb-3 font-normal text-gray-700">{{ $resource->resource_uploaded_by }}
                                         </p>
                                         <div class="mt-4 flex justify-end">
