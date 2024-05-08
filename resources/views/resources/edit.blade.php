@@ -35,7 +35,8 @@
                             <label for="resource_uploaded_by"
                                 class="block font-medium text-sm text-gray-900">{{ __('Uploaded By') }}</label>
                             <select id="resource_uploaded_by" name="resource_uploaded_by"
-                                class="block mt-1 w-full rounded text-gray-900" required>
+                                class="block mt-1 w-full rounded text-gray-900" required
+                                {{ Auth::user()->user_type === 'teacher' ? : '' }}>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}"
                                         {{ $user->id == $resource->resource_uploaded_by ? 'selected' : '' }}>
