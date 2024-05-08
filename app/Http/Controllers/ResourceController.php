@@ -6,6 +6,8 @@ use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class ResourceController extends Controller
 {
@@ -25,6 +27,9 @@ class ResourceController extends Controller
             });
         }
 
+        // Fetch distinct resource types
+        $resourceTypes = $resourceQuery->pluck('resource_type')->unique();
+
         // Add filter for resource_type
         if ($request->filled('type')) {
             $type = $request->input('type');
@@ -32,7 +37,7 @@ class ResourceController extends Controller
         }
 
         $resources = $resourceQuery->paginate()->appends(request()->query());
-        return view('resources.index', compact('resources'));
+        return view('resources.index', compact('resources', 'resourceTypes'));
     }
 
     /**
