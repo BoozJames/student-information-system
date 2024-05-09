@@ -3,29 +3,29 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Generator;
-use Illuminate\Support\Str;
+use App\Models\Resource;
+use Faker\Generator as Faker;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Resource>
- */
 class ResourceFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function definition(): array
     {
         return [
-            'resource_name' => fake()->name,
-            'resource_type' => 'image', // Set the resource type to 'image'
-            'resource_filename' => fake()->word . '.jpg', // Example filename
-            'resource_url' => fake()->imageUrl(), // Generate a random image URL
-            'resource_uploaded_by' => fake()->name,
-            'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
-            'updated_at' => fake()->dateTimeBetween('-1 year', 'now'),
+            'resource_name' => $this->faker->sentence(),
+            'resource_type' => $this->faker->randomElement(['reports', 'activities', 'forms']),
+            'resource_filename' => $this->faker->word() . '.pdf',
+            'resource_url' => 'storage/resources/' . $this->faker->word() . '.pdf',
+            'resource_uploaded_by' => function () {
+                // Get a random user ID from the users table
+                return \App\Models\User::inRandomOrder()->first()->id;
+            },
+            'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }

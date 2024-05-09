@@ -5,20 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Grade extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'post_title',
-        'post_content',
-        'post_type',
-        'post_uploaded_by',
+        'user_id',
+        'subject_id',
+        'value',
     ];
 
-    // Define the 'user' relationship
     public function user()
     {
-        return $this->belongsTo(User::class, 'post_uploaded_by');
+        return $this->belongsTo(User::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
     }
 }

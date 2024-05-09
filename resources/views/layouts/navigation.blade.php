@@ -5,26 +5,26 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('posts.index') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('class-schedule')">
+                    <x-nav-link :href="route('schedules.index')" :active="request()->routeIs('schedules.index')">
                         {{ __('Class Schedule') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('grades')">
+                    <x-nav-link :href="route('grades.index')" :active="request()->routeIs('grades.index')">
                         {{ __('Grades') }}
                     </x-nav-link>
                 </div>
@@ -63,7 +63,7 @@
 
                     <x-slot name="content">
                         <div class="font-medium text-base text-gray-800 mx-auto px-3">
-                            {{ Auth::user()->user_type }}
+                            {{ strtoupper(Auth::user()->user_type )}}
                         </div>
                         <hr>
 
@@ -71,9 +71,13 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        @if (Auth::check() && (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin'))
+                        @if (Auth::check() && (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin'))
                             <x-dropdown-link :href="route('users.index')">
                                 {{ __('Users') }}
+                            </x-dropdown-link>
+
+                            <x-dropdown-link :href="route('subjects.index')">
+                                {{ __('Subjects') }}
                             </x-dropdown-link>
                         @endif
 
@@ -118,7 +122,7 @@
                 {{ __('Class Schedule') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('grades')">
+            <x-responsive-nav-link :href="route('grades.index')" :active="request()->routeIs('grades.index')">
                 {{ __('Grades') }}
             </x-responsive-nav-link>
 
@@ -126,7 +130,7 @@
                 {{ __('Resource Center') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('attendance-tracker')">
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('attendance.index')">
                 {{ __('Attendance Tracker') }}
             </x-responsive-nav-link>
         </div>
@@ -145,9 +149,13 @@
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
-                @if (Auth::check() && (Auth::user()->user_type === 'Teacher' || Auth::user()->user_type === 'Admin'))
+                @if (Auth::check() && (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin'))
                     <x-responsive-nav-link :href="route('users.index')">
                         {{ __('Users') }}
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('subjects.index')">
+                        {{ __('Subjects') }}
                     </x-responsive-nav-link>
                 @endif
 
