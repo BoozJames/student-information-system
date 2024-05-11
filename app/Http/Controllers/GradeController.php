@@ -113,7 +113,7 @@ class GradeController extends Controller
     public function edit(Grade $grade)
     {
         // Only admins can edit grades
-        if (strtolower(Auth::user()->user_type) === 'admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Retrieve all users and subjects
             $users = User::all();
             $subjects = Subject::all();
