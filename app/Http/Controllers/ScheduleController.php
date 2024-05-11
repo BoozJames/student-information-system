@@ -24,6 +24,11 @@ class ScheduleController extends Controller
             $query->whereHas('user', function ($studentQuery) {
                 $studentQuery->where('id', Auth::id());
             });
+        } elseif (strtolower(Auth::user()->user_type) === 'teacher') {
+            // Filter schedules for teachers based on their ID
+            $query->whereHas('subject.teacher', function ($teacherQuery) {
+                $teacherQuery->where('id', Auth::id());
+            });
         }
 
         // Search functionality
