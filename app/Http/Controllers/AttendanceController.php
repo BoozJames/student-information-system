@@ -63,7 +63,8 @@ class AttendanceController extends Controller
      */
     public function edit(Attendance $attendance)
     {
-        return view('attendances.edit', compact('attendance'));
+        $schedules = Schedule::all();
+        return view('attendances.edit', compact('attendance', 'schedules'));
     }
 
     /**
@@ -73,6 +74,7 @@ class AttendanceController extends Controller
     {
         // Validate the incoming request data
         $request->validate([
+            'schedule_id' => 'required|exists:schedules,id',
             'date' => 'required|date',
             'attended' => 'required|boolean',
         ]);
@@ -83,7 +85,7 @@ class AttendanceController extends Controller
         // Redirect back to the index page with a success message
         return redirect()->route('attendances.index')->with('success', 'Attendance updated successfully.');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
