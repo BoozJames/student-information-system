@@ -53,6 +53,10 @@
                                         <span
                                             class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Value</span>
                                     </th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left">
+                                        <span
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Status</span>
+                                    </th>
                                     @if (Auth::user()->user_type !== 'student')
                                         <th class="px-6 py-3 bg-gray-50 text-left">
                                             <span
@@ -73,6 +77,13 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ $grade->value }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            @if ($grade->value >= 75)
+                                                <span class="text-green-600">Pass</span>
+                                            @else
+                                                <span class="text-red-600">Failed</span>
+                                            @endif
                                         </td>
                                         @if (Auth::user()->user_type !== 'student')
                                             <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
