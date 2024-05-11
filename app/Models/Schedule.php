@@ -32,4 +32,9 @@ class Schedule extends Model
     {
         return $this->subject->teacher();
     }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

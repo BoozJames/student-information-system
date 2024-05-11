@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -11,7 +12,8 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        //
+        $attendances = Attendance::all();
+        return view('attendances.index', compact('attendances'));
     }
 
     /**
@@ -19,7 +21,8 @@ class AttendanceController extends Controller
      */
     public function create()
     {
-        //
+        // You might need to pass data like schedules or users to the view for selection
+        return view('attendances.create');
     }
 
     /**
@@ -27,38 +30,64 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the incoming request data
+        $request->validate([
+            'schedule_id' => 'required|exists:schedules,id',
+            'user_id' => 'required|exists:users,id',
+            'date' => 'required|date',
+            'attended' => 'required|boolean',
+        ]);
+
+        // Create the attendance record
+        Attendance::create($request->all());
+
+        // Redirect to the index page with a success message
+        return redirect()->route('attendances.index')->with('success', 'Attendance recorded successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Attendance $attendance)
     {
-        //
+        return view('attendances.show', compact('attendance'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Attendance $attendance)
     {
-        //
+        return view('attendances.edit', compact('attendance'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Attendance $attendance)
     {
-        //
+        // Validate the incoming request data
+        $request->validate([
+            'date' => 'required|date',
+            'attended' => 'required|boolean',
+        ]);
+
+        // Update the attendance record
+        $attendance->update($request->all());
+
+        // Redirect back to the index page with a success message
+        return redirect()->route('attendances.index')->with('success', 'Attendance updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Attendance $attendance)
     {
-        //
+        // Delete the attendance record
+        $attendance->delete();
+
+        // Redirect back to the index page with a success message
+        return redirect()->route('attendances.index')->with('success', 'Attendance deleted successfully.');
     }
 }
