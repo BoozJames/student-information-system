@@ -12,7 +12,7 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $attendances = Attendance::all();
+        $attendances = Attendance::paginate(10); // Change 10 to the number of items per page you desire
         return view('attendances.index', compact('attendances'));
     }
 

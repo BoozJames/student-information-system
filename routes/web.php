@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('schedules', ScheduleController::class);
     Route::resource('grades', GradeController::class);
     Route::resource('posts', PostController::class);
-    Route::resource('attendance', AttendanceController::class);
+    Route::resource('attendances', AttendanceController::class);
 
     Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
     Route::get('/subjects/create', [SubjectController::class, 'create'])->name('subjects.create');
