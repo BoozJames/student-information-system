@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\Schedule;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -21,8 +23,11 @@ class AttendanceController extends Controller
      */
     public function create()
     {
-        // You might need to pass data like schedules or users to the view for selection
-        return view('attendances.create');
+        // Fetch schedules and users to pass to the view
+        $schedules = Schedule::all();
+        $users = User::all();
+
+        return view('attendances.create', compact('schedules', 'users'));
     }
 
     /**
