@@ -35,8 +35,8 @@
                             <select id="post_type" name="post_type" class="block mt-1 w-full rounded text-gray-900">
                                 <option value="">Select Post Type</option>
                                 <option value="news" @if ($post->post_type === 'news') selected @endif>News</option>
-                                <option value="blog" @if ($post->post_type === 'blog') selected @endif>Blog</option>
-                                <option value="tutorial" @if ($post->post_type === 'tutorial') selected @endif>Tutorial
+                                <option value="events" @if ($post->post_type === 'events') selected @endif>Events</option>
+                                <option value="announcement" @if ($post->post_type === 'announcement') selected @endif>Announcement
                                 </option>
                             </select>
                         </div>
