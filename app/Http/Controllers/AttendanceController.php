@@ -6,15 +6,41 @@ use App\Models\Attendance;
 use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $attendances = Attendance::paginate(10); // Change 10 to the number of items per page you desire
+        $query = Attendance::query();
+
+        // Adjust the query based on user type
+        if (strtolower(Auth::user()->user_type) === 'student') {
+            // Filter schedules for students based on their ID
+            $query->whereHas('user', function ($studentQuery) {
+                $studentQuery->where('id', Auth::id());
+            });
+        } elseif (strtolower(Auth::user()->user_type) === 'teacher') {
+            // Filter schedules for teachers based on their ID
+            $query->whereHas('schedule.subject.teacher', function ($teacherQuery) {
+                $teacherQuery->where('id', Auth::id());
+            });
+        }
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            // Add search conditions to the query
+            $query->where('user_id', 'like', "%$search%")
+                ->orWhere('date', 'like', "%$search%");
+        }
+
+        $attendances = $query->paginate(10);
+
+
         return view('attendances.index', compact('attendances'));
     }
 
@@ -85,7 +111,7 @@ class AttendanceController extends Controller
         // Redirect back to the index page with a success message
         return redirect()->route('attendances.index')->with('success', 'Attendance updated successfully.');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      */

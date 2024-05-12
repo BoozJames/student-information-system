@@ -85,8 +85,6 @@
                                         </td>
                                         @if (Auth::user()->user_type !== 'student')
                                             <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                                <a href="{{ route('attendances.show', $attendance->id) }}"
-                                                    class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
                                                 <a href="{{ route('attendances.edit', $attendance->id) }}"
                                                     class="text-green-500 hover:text-green-700 mr-2">Edit</a>
                                                 <form action="{{ route('attendances.destroy', $attendance->id) }}"
