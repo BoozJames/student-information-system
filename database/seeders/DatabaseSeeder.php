@@ -8,6 +8,7 @@ use App\Models\Schedule;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Subject;
+use App\Models\Attendance;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
         Grade::factory()->count(60)->create();
         Schedule::factory()->count(60)->create();
         Post::factory()->count(60)->create();
+        Attendance::factory()->count(10)->create();
 
         User::factory()->create([
             'name' => 'Test Student',

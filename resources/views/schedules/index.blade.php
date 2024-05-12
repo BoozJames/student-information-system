@@ -59,6 +59,10 @@
                                             class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">End
                                             Time</span>
                                     </th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left">
+                                        <span
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Teacher</span>
+                                    </th>
                                     @if (Auth::user()->user_type !== 'student')
                                         <th class="px-6 py-3 bg-gray-50 text-left">
                                             <span
@@ -82,6 +86,10 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ date('h:ia', strtotime($schedule->end_time)) }}
+                                        </td>
+                                        <!-- Display teacher's name -->
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            {{ $schedule->subject->teacher->name }}
                                         </td>
                                         @if (Auth::user()->user_type !== 'student')
                                             <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">

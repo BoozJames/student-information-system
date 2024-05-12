@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('attendance-tracker')">
+                    <x-nav-link :href="route('attendances.index')" :active="request()->routeIs('attendances.index')">
                         {{ __('Attendance Tracker') }}
                     </x-nav-link>
                 </div>
@@ -130,7 +130,7 @@
                 {{ __('Resource Center') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('attendance.index')">
+            <x-responsive-nav-link :href="route('attendances.index')" :active="request()->routeIs('attendances.index')">
                 {{ __('Attendance Tracker') }}
             </x-responsive-nav-link>
         </div>

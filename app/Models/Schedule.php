@@ -27,4 +27,14 @@ class Schedule extends Model
     {
         return $this->belongsTo(Subject::class);
     }
+
+    public function teacher()
+    {
+        return $this->subject->teacher();
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

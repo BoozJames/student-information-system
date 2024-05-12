@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Grades') }}
+            {{ __('Attendance Records') }}
         </h2>
     </x-slot>
 
@@ -13,14 +13,12 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="overflow-hidden overflow-x-auto p-6 bg-white border-b border-yellow-300">
                     <nav class="flex flex-wrap mb-4">
-                        <a href="#" onclick="resetFilters()" class="mr-4 mb-2 py-2 px-4 bg-[#40930B] rounded">
-                            Reset Filters
-                        </a>
+                        <a href="#" onclick="resetFilters()" class="mr-4 mb-2 py-2 px-4 bg-[#40930B] rounded">Reset
+                            Filters</a>
                         @if (Auth::user()->user_type !== 'student')
                             <div class="ml-auto">
-                                <a href="{{ route('grades.create') }}" class="mb-2 py-2 px-4 bg-[#40930B] rounded">
-                                    Create Grade
-                                </a>
+                                <a href="{{ route('attendances.create') }}"
+                                    class="mb-2 py-2 px-4 bg-[#40930B] rounded">Record Attendance</a>
                             </div>
                         @endif
                     </nav>
@@ -28,7 +26,7 @@
                         <div class="my-2 bg-white">
                             <div class="flex flex-wrap items-center justify-between">
                                 <!-- Search form -->
-                                <form method="GET" action="{{ route('grades.index') }}"
+                                <form method="GET" action="{{ route('attendances.index') }}"
                                     class="flex flex-wrap items-center">
                                     <input type="text" name="search" placeholder="Search..."
                                         class="mr-2 px-4 py-2 border rounded focus:border-yellow-300 text-gray-900">
@@ -47,15 +45,15 @@
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Subject</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Schedule</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Value</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Date</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Status</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Attended</span>
                                     </th>
                                     @if (Auth::user()->user_type !== 'student')
                                         <th class="px-6 py-3 bg-gray-50 text-left">
@@ -67,32 +65,30 @@
                             </thead>
 
                             <tbody class="bg-white divide-y divide-gray-200 divide-solid">
-                                @foreach ($grades as $grade)
+                                @foreach ($attendances as $attendance)
                                     <tr class="bg-white">
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $grade->user->name }}
+                                            {{ $attendance->user->name }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $grade->subject->subject_name }}
+                                            {{ $attendance->schedule->subject->subject_name }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $grade->value }}
+                                            {{ $attendance->date }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            @if ($grade->value >= 75)
-                                                <span class="text-green-600">Pass</span>
+                                            @if ($attendance->attended)
+                                                <span class="text-green-600">Yes</span>
                                             @else
-                                                <span class="text-red-600">Failed</span>
+                                                <span class="text-red-600">No</span>
                                             @endif
                                         </td>
                                         @if (Auth::user()->user_type !== 'student')
                                             <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                                <a href="{{ route('grades.show', $grade->id) }}"
-                                                    class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
-                                                <a href="{{ route('grades.edit', $grade->id) }}"
+                                                <a href="{{ route('attendances.edit', $attendance->id) }}"
                                                     class="text-green-500 hover:text-green-700 mr-2">Edit</a>
-                                                <form action="{{ route('grades.destroy', $grade->id) }}" method="POST"
-                                                    class="inline">
+                                                <form action="{{ route('attendances.destroy', $attendance->id) }}"
+                                                    method="POST" class="inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
@@ -108,7 +104,7 @@
 
                     <!-- Pagination Links -->
                     <div class="mt-2">
-                        {{ $grades->links() }}
+                        {{ $attendances->links() }}
                     </div>
 
                 </div>
@@ -119,6 +115,6 @@
 
 <script>
     function resetFilters() {
-        window.location.href = "{{ route('grades.index') }}";
+        window.location.href = "{{ route('attendances.index') }}";
     }
 </script>

@@ -24,6 +24,11 @@ class GradeController extends Controller
             $query->whereHas('user', function ($userQuery) {
                 $userQuery->where('id', Auth::id());
             });
+        } elseif (strtolower(Auth::user()->user_type) === 'teacher') {
+            // Filter schedules for teachers based on their ID
+            $query->whereHas('subject.teacher', function ($teacherQuery) {
+                $teacherQuery->where('id', Auth::id());
+            });
         }
 
         // Search functionality
@@ -108,7 +113,7 @@ class GradeController extends Controller
     public function edit(Grade $grade)
     {
         // Only admins can edit grades
-        if (strtolower(Auth::user()->user_type) === 'admin') {
+        if (strtolower(Auth::user()->user_type) === 'teacher' || strtolower(Auth::user()->user_type) === 'admin') {
             // Retrieve all users and subjects
             $users = User::all();
             $subjects = Subject::all();
