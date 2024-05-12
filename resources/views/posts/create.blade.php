@@ -35,6 +35,7 @@
                                 <option value="">Select Post Type</option>
                                 <option value="news">News</option>
                                 <option value="events">Events</option>
+                                <option value="announcement">Announcement</option>
                             </select>
                         </div>
 
