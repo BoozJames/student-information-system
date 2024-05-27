@@ -40,6 +40,12 @@
                         {{ __('Attendance Tracker') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('submissions.index')" :active="request()->routeIs('submissions.index')">
+                        {{ __('Submissions') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -63,7 +69,7 @@
 
                     <x-slot name="content">
                         <div class="font-medium text-base text-gray-800 mx-auto px-3">
-                            {{ strtoupper(Auth::user()->user_type )}}
+                            {{ strtoupper(Auth::user()->user_type) }}
                         </div>
                         <hr>
 
@@ -132,6 +138,10 @@
 
             <x-responsive-nav-link :href="route('attendances.index')" :active="request()->routeIs('attendances.index')">
                 {{ __('Attendance Tracker') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('submissions.index')" :active="request()->routeIs('submissions.index')">
+                {{ __('Submissions') }}
             </x-responsive-nav-link>
         </div>
 
