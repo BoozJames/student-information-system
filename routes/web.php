@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/subjects/{subject}/edit', [SubjectController::class, 'edit'])->name('subjects.edit');
     Route::put('/subjects/{subject}', [SubjectController::class, 'update'])->name('subjects.update');
     Route::delete('/subjects/{subject}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
+
+    Route::resource('submissions', SubmissionController::class);
 
     // // List users
     // Route::get('/users', [UserController::class, 'index'])->name('users.index');
