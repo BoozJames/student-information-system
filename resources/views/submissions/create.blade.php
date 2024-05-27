@@ -24,7 +24,7 @@
                             <select id="subject_id" name="subject_id" class="block mt-1 w-full rounded text-gray-900">
                                 <option value="">Select Subject</option>
                                 @foreach ($subjects as $subject)
-                                    <option value="{{ $subject->id }}">{{ $subject->subject_name }}</option>
+                                    <option value="{{ $subject->id }}">{{ $subject->subject_name }} ({{ $subject->teacher->name }})</option>
                                 @endforeach
                             </select>
                         </div>

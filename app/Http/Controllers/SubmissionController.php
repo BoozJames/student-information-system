@@ -28,7 +28,7 @@ class SubmissionController extends Controller
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $filePath = $file->store('submissions');
+            $filePath = $file->store('public/submissions');
             Log::info('File stored at: ' . $filePath);
 
             Submission::create([
@@ -62,37 +62,56 @@ class SubmissionController extends Controller
 
     public function show(Submission $submission)
     {
-        $this->authorize('view', $submission);
-        return view('submissions.show', compact('submission'));
+        // Manually check if the user is authorized to view the submission
+        if (auth()->user()->user_type === 'teacher' || $submission->student_id === auth()->id()) {
+            return view('submissions.show', compact('submission'));
+        } else {
+            return redirect()->route('submissions.index')->with('error', 'Unauthorized access.');
+        }
     }
 
     public function edit(Submission $submission)
     {
-        $this->authorize('update', $submission);
-        return view('submissions.edit', compact('submission'));
+        // Manually check if the user is authorized to edit the submission
+        if (auth()->user()->user_type === 'teacher' || $submission->student_id === auth()->id()) {
+            return view('submissions.edit', compact('submission'));
+        } else {
+            return redirect()->route('submissions.index')->with('error', 'Unauthorized access.');
+        }
     }
 
     public function update(Request $request, Submission $submission)
     {
-        $this->authorize('update', $submission);
+        // Manually check if the user is authorized to update the submission
+        if (auth()->user()->user_type === 'teacher' || $submission->student_id === auth()->id()) {
+            $request->validate([
+                'grade' => 'nullable|integer|min:0|max:100',
+                'locked_at' => 'nullable|date',
+            ]);
 
-        $request->validate([
-            'grade' => 'nullable|integer|min:0|max:100',
-            'locked_at' => 'nullable|date',
-        ]);
+            $submission->update($request->only('grade', 'locked_at'));
 
-        $submission->update($request->only('grade', 'locked_at'));
-
-        return redirect()->route('submissions.index')->with('success', 'Submission updated successfully.');
+            return redirect()->route('submissions.index')->with('success', 'Submission updated successfully.');
+        } else {
+            return redirect()->route('submissions.index')->with('error', 'Unauthorized access.');
+        }
     }
 
     public function destroy(Submission $submission)
     {
-        $this->authorize('delete', $submission);
+        // Manually check if the user is authorized to delete the submission
+        if (auth()->user()->user_type === 'teacher' || auth()->user()->user_type === 'admin' || $submission->student_id === auth()->id()) {
+            // If submission is locked, only allow deletion by admin or teacher
+            if ($submission->locked_at !== null && auth()->user()->user_type !== 'teacher' && auth()->user()->user_type !== 'admin') {
+                return redirect()->route('submissions.index')->with('error', 'Submission is locked and cannot be deleted.');
+            }
 
-        Storage::delete($submission->file_path);
-        $submission->delete();
+            Storage::delete($submission->file_path);
+            $submission->delete();
 
-        return redirect()->route('submissions.index')->with('success', 'Submission deleted successfully.');
+            return redirect()->route('submissions.index')->with('success', 'Submission deleted successfully.');
+        } else {
+            return redirect()->route('submissions.index')->with('error', 'Unauthorized access.');
+        }
     }
 }

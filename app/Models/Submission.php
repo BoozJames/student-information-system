@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Submission extends Model
 {
@@ -26,5 +27,17 @@ class Submission extends Model
     public function subject()
     {
         return $this->belongsTo(Subject::class);
+    }
+
+    // Accessor for formatted locked_at date
+    public function getLockedAtAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('Y-m-d') : null;
+    }
+
+    // Mutator for setting locked_at attribute
+    public function setLockedAtAttribute($value)
+    {
+        $this->attributes['locked_at'] = $value ? Carbon::parse($value) : null;
     }
 }

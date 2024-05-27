@@ -16,19 +16,26 @@
                         @method('PUT')
 
                         <div>
-                            <x-label for="grade" :value="__('Grade')" />
-                            <x-input id="grade" type="number" name="grade" value="{{ $submission->grade }}"
-                                min="0" max="100" />
+                            <label for="grade"
+                                class="block font-medium text-sm text-gray-700">{{ __('Grade') }}</label>
+                            <input id="grade" type="number" name="grade"
+                                value="{{ old('grade', $submission->grade) }}" min="0" max="100"
+                                class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         </div>
 
                         <div class="mt-4">
-                            <x-label for="locked_at" :value="__('Lock Date')" />
-                            <x-input id="locked_at" type="date" name="locked_at"
-                                value="{{ $submission->locked_at ? $submission->locked_at->format('Y-m-d') : '' }}" />
+                            <label for="locked_at"
+                                class="block font-medium text-sm text-gray-700">{{ __('Lock Date') }}</label>
+                            <input id="locked_at" type="date" name="locked_at"
+                                value="{{ old('locked_at', $submission->locked_at) }}"
+                                class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         </div>
 
                         <div class="mt-4">
-                            <x-button>{{ __('Update') }}</x-button>
+                            <button type="submit"
+                                class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                {{ __('Update') }}
+                            </button>
                         </div>
                     </form>
                 </div>

@@ -2,9 +2,15 @@
 
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('My Submissions') }}
-        </h2>
+        @if (Auth::user()->user_type === 'teacher' || Auth::user()->user_type === 'admin')
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Submissions') }}
+            </h2>
+        @else
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('My Submissions') }}
+            </h2>
+        @endif
     </x-slot>
 
     <!-- Include the toast component -->
@@ -42,6 +48,12 @@
                                     class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Score
                                 </th>
+                                @if (Auth::user()->user_type !== 'teacher')
+                                    <th
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Teacher
+                                    </th>
+                                @endif
                                 <th
                                     class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Actions
@@ -61,16 +73,30 @@
                                         </a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {{ $submission->submitted_at }}
+                                        {{ \Carbon\Carbon::parse($submission->submitted_at)->format('F j, Y g:ia') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                         {{ $submission->grade ?? 'N/A' }}
                                     </td>
+                                    @if (Auth::user()->user_type !== 'teacher')
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $submission->subject->teacher->name ?? 'N/A' }}
+                                        </td>
+                                    @endif
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        <a href="{{ route('submissions.show', $submission->id) }}"
-                                            class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
-                                        <a href="{{ route('submissions.edit', $submission->id) }}"
-                                            class="text-green-500 hover:text-green-700 mr-2">Edit</a>
+                                        @if (Auth::user()->user_type !== 'student')
+                                            <a href="{{ route('submissions.show', $submission->id) }}"
+                                                class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
+                                            <a href="{{ route('submissions.edit', $submission->id) }}"
+                                                class="text-green-500 hover:text-green-700 mr-2">Edit</a>
+                                        @endif
+                                        <form action="{{ route('submissions.destroy', $submission->id) }}"
+                                            method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="text-red-500 hover:text-red-700">Unsubmit</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
